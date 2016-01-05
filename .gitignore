@@ -1,0 +1,5 @@
+.idea
+generators
+node_modules
+.yo-rc.json
+npm-debug.log

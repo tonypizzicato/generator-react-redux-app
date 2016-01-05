@@ -1,0 +1,27 @@
+{
+  "name":            "generator-admin",
+  "version":         "0.0.1",
+  "description":     "Admin App Generator",
+  "repository":      "tonypizzicato/generator-admin-react-redux",
+  "main":            "generators/app/index.js",
+  "files":           [
+    "generators"
+  ],
+  "scripts":         {
+    "clean":      "rm -rf ./generators",
+    "compile":    "npm run clean && ./node_modules/.bin/babel src -d generators",
+    "prepublish": "npm run compile"
+  },
+  "dependencies":    {
+    "yeoman-generator": "^0.22.2"
+  },
+  "devDependencies": {
+    "babel-cli":           "^6.3.17",
+    "babel-preset-es2015": "^6.3.13"
+  },
+  "keywords":        [
+    "yeoman-generator"
+  ],
+  "author":          "Anton Grebnev",
+  "license":         "ISC"
+}
