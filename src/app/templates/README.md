@@ -1,0 +1,1 @@
+# Bootstrapped admin app with React and Redux

@@ -1,0 +1,10 @@
+{
+  "name": "<%= appName %>",
+  "version": "0.0.1",
+  "description": "React/Redux platform admin app",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "license": "ISC"
+}
