@@ -1,10 +1,12 @@
 {
-  "name": "<%= appName %>",
+  "name": "<%= appNameSlug %>",
   "version": "0.0.1",
   "description": "React/Redux platform admin app",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": <%- JSON.stringify(deps, null, 2).replace(/\n/g, "\n  ") %>,
+  "devDependencies": <%- JSON.stringify(devDeps, null, 2).replace(/\n/g, "\n  ") %>
 }
