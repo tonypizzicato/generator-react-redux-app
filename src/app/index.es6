@@ -40,8 +40,12 @@ function getPackageVersions(prop, packages) {
         });
 }
 
-function copy(src, dest) {
-    this.fs.copyTpl(this.templatePath(src), this.destinationPath(dest), this.props);
+function copy(src, dest, tpl = true) {
+    if(tpl) {
+        this.fs.copyTpl(this.templatePath(src), this.destinationPath(dest), this.props);
+    } else {
+        this.fs.copy(this.templatePath(src), this.destinationPath(dest));
+    }
 }
 
 class AdminAppGenerator extends Base {
@@ -55,12 +59,19 @@ class AdminAppGenerator extends Base {
     }
 
     prompting() {
-        let done   = this.async();
+        let done = this.async();
+
         let prompt = [
             {
                 type:    'input',
                 name:    'appName',
                 message: 'What\'s the name of your application?',
+            }, {
+                type:      'input',
+                name:      'port',
+                message:   'Dev server port',
+                choices:   [{name: 'Yes', value: true}, {name: 'No', value: false}],
+                'default': 3000
             }, {
                 type:      'list',
                 name:      'install',
@@ -107,30 +118,29 @@ class AdminAppGenerator extends Base {
 
             devDeps() {
                 this.getPackageVersions('devDeps', [
-                    "babelify",
-                    "browserify",
-                    "chai",
-                    "chai-immutable",
-                    "envify",
-                    "es6-promise",
+                    "autoprefixer-loader",
+                    "babel-loader",
+                    "babel-plugin-react-transform",
+                    "babel-polyfill",
+                    "babel-preset-es2015",
+                    "babel-preset-react",
+                    "babel-preset-stage-0",
+                    "css-loader",
+                    "extract-text-webpack-plugin",
                     "gulp",
-                    "gulp-autoprefixer",
                     "gulp-clean",
-                    "gulp-concat",
-                    "gulp-cssmin",
-                    "gulp-htmlmin",
-                    "gulp-less",
+                    "gulp-notify",
                     "gulp-replace",
                     "gulp-sequence",
-                    "gulp-uglify",
                     "gulp-util",
-                    "jsdom",
-                    "mocha",
-                    "moment",
-                    "sinon",
-                    "vinyl-buffer",
-                    "vinyl-source-stream",
-                    "watchify",
+                    "less",
+                    "less-loader",
+                    "react-transform-catch-errors",
+                    "react-transform-hmr",
+                    "redbox-react",
+                    "style-loader",
+                    "webpack",
+                    "webpack-dev-server"
                 ]);
             }
         }
@@ -139,17 +149,19 @@ class AdminAppGenerator extends Base {
     writing() {
         this.copy('_package.json', 'package.json');
         this.copy('_gitignore', '.gitignore');
-        this.copy('_gulpfile.js', 'gulpfile.js');
+        this.copy('_gulpfile.babel.js', 'gulpfile.babel.js');
         this.copy('_babelrc', '.babelrc');
+        this.copy('_webpack.development.js', 'webpack.development.js');
+        this.copy('favicon.ico', 'favicon.ico', false);
         this.copy('README.md', 'README.md');
-        this.copy('index.html', 'index.html');
+        this.copy('index.html', 'src/index.html');
 
-        this.directory('js', 'js');
-        this.directory('styles', 'styles');
+        this.directory('js', 'src/js');
+        this.directory('styles', 'src/styles');
     }
 
     install() {
-        if (this.install) {
+        if (this.props.install) {
             this.installDependencies({bower: false});
         }
     }

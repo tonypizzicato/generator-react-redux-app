@@ -7,18 +7,9 @@ class ApplicationContainer extends Component {
 
         return (
             <div>
-                {React.createElement('div', {key: location.pathname, style: this.getStyles().transitioned}, children)}
+                {React.createElement('div', {key: location.pathname}, children)}
             </div>
         )
-    }
-
-    getStyles() {
-        return {
-            transitioned: {
-                backfaceVisibility: 'hidden',
-                transform:          'translate3d(0, 0, 0)'
-            }
-        }
     }
 }
 

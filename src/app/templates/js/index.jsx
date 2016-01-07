@@ -15,6 +15,7 @@ import reducer from './reducer';
 
 /** onTouchTap workaround. See {@link https://github.com/zilverline/react-tap-event-plugin} */
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import Perf from 'react-addons-perf';
 
 import AppRoutes from './app-routes.jsx';
 
