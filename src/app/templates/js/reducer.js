@@ -1,15 +1,29 @@
 import {Map, List} from 'immutable';
 
-import { INITIALIZE } from './actions';
+import routerStateReducer from 'redux-router/lib/routerStateReducer';
 
-const INITIAL_STATE = Map({
-    initialized: false
+import menu from './reducers/menu';
+
+import { INITIALIZE } from './actions';
+import { TOGGLE_MENU } from './actions';
+
+/**
+ * TODO: fix router initial state
+ * @author tony.pizzicato
+ * @date 08.01.16
+ * @time 18:39
+ */
+
+export const INITIAL_STATE = Map({
+    router:      {routes: [], params: {}, location: {query: {q: ''}}, components: []},
+    initialized: false,
+    menuOpened:  false
 });
 
 /**
  *
  * TODO: compose reducers with multiple files
- * @author Tony Pizzicato
+ * @author tony.pizzicato
  * @date 06.01.16
  * @time 17:54
  *
@@ -25,8 +39,10 @@ const INITIAL_STATE = Map({
  * @returns {Object} New app state
  */
 const reducer = function (state = INITIAL_STATE, action) {
-    return Map({
-        initialized: true
+    return state.merge({
+        router:      routerStateReducer(state.get('router'), action),
+        initialized: true,
+        menuOpened:  menu(state.get('menuOpened'), action)
     });
 }
 

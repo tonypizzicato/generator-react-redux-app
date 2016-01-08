@@ -78,4 +78,6 @@ gulp.task('webpack', function () {
     });
 });
 
-gulp.task('default', seq('set-dev-node-env', 'clean', ['copy', 'webpack'], 'watch'));
+gulp.task('serve', seq('set-dev-node-env', 'clean', ['copy', 'webpack'], 'watch'));
+
+gulp.task('default', ['serve']);

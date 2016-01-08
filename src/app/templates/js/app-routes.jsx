@@ -5,13 +5,16 @@ import {Route, Redirect, IndexRoute} from 'react-router';
 import Container from './app-container.jsx';
 
 /** Here we define all our app page components */
-import Application from './components/Application.jsx';
+import Main from './components/pages/Main.jsx';
+import Home from './components/pages/Home.jsx';
+import Dash from './components/pages/Dash.jsx';
 
 const AppRoutes = (
     <Route path="/" component={Container}>
-        <Route path="home" component={Application}/>
+        <Route path="home" component={Home}/>
+        <Route path="dash" component={Dash}/>
 
-        <IndexRoute component={Application}/>
+        <IndexRoute component={Main}/>
     </Route>
 );
 

@@ -3,10 +3,13 @@ import { createAction } from 'redux-actions';
 /** App initialized action */
 export const INITIALIZE = 'INITIALIZE';
 
+/** Toggle menu state */
+export const TOGGLE_MENU = 'TOGGLE_MENU';
+
 /**
  *
  * TODO: compose actions with multiple files
- * @author Tony Pizzicato
+ * @author tony.pizzicato
  * @date 06.01.16
  * @time 17:54
  *
@@ -29,7 +32,8 @@ export const INITIALIZE = 'INITIALIZE';
  * More about actions: {@link http://rackt.org/redux/docs/basics/Actions.html Actions}
  */
 const actions = {
-    initialize: createAction(INITIALIZE)
+    initialize: createAction(INITIALIZE),
+    toggleMenu: createAction(TOGGLE_MENU)
 };
 
 export default actions;

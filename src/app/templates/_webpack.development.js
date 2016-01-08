@@ -21,6 +21,15 @@ module.exports = function (PATH, PORT) {
             }, {
                 test:   /\.less/,
                 loader: 'style!css!autoprefixer!less'
+            }, {
+                test:    /\.svg/,
+                loaders: [
+                    'file-loader',
+                    'svgo-loader?useConfig=svgo'
+                ]
+            }, {
+                test:   /\.(eot|woff|woff2|ttf|png|jpg)$/,
+                loader: 'url-loader?limit=30000&name=[name]-[hash].[ext]'
             }]
         },
         output:    {
@@ -39,6 +48,13 @@ module.exports = function (PATH, PORT) {
                     'NODE_ENV': JSON.stringify('development'),
                 }
             })
-        ]
+        ],
+        svgo:      {
+            plugins: [
+                {removeTitle: true},
+                {convertColors: {shorthex: false}},
+                {convertPathData: false}
+            ]
+        }
     }
 };

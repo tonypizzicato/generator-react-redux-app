@@ -41,7 +41,7 @@ function getPackageVersions(prop, packages) {
 }
 
 function copy(src, dest, tpl = true) {
-    if(tpl) {
+    if (tpl) {
         this.fs.copyTpl(this.templatePath(src), this.destinationPath(dest), this.props);
     } else {
         this.fs.copy(this.templatePath(src), this.destinationPath(dest));
@@ -70,7 +70,6 @@ class AdminAppGenerator extends Base {
                 type:      'input',
                 name:      'port',
                 message:   'Dev server port',
-                choices:   [{name: 'Yes', value: true}, {name: 'No', value: false}],
                 'default': 3000
             }, {
                 type:      'list',
@@ -100,6 +99,7 @@ class AdminAppGenerator extends Base {
                     "history",
                     "immutable",
                     "lodash",
+                    "material-design-icons",
                     "normalize.css",
                     "react",
                     "react-addons-perf",
@@ -111,6 +111,7 @@ class AdminAppGenerator extends Base {
                     "redux-actions",
                     "redux-devtools",
                     "redux-logger",
+                    "redux-router",
                     "redux-thunk",
                     "whatwg-fetch"
                 ]);
@@ -127,6 +128,7 @@ class AdminAppGenerator extends Base {
                     "babel-preset-stage-0",
                     "css-loader",
                     "extract-text-webpack-plugin",
+                    "file-loader",
                     "gulp",
                     "gulp-clean",
                     "gulp-notify",
@@ -138,7 +140,12 @@ class AdminAppGenerator extends Base {
                     "react-transform-catch-errors",
                     "react-transform-hmr",
                     "redbox-react",
+                    "redux-devtools",
+                    "redux-devtools-dock-monitor",
+                    "redux-devtools-log-monitor",
                     "style-loader",
+                    "svgo-loader",
+                    "url-loader",
                     "webpack",
                     "webpack-dev-server"
                 ]);
