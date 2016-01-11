@@ -51,8 +51,6 @@ body {
 
 .page__content-pusher {
   position:        relative;
-  left:            40px;
-  z-index:         99;
   height:          100%;
   perspective:     1000px;
   transition:      transform .3s;
@@ -86,10 +84,23 @@ body {
 
 .page__content {
   height:     100%;
-  padding:    1em 2em;
+  padding:    2em 4em;
   overflow-y: scroll;
   background: linear-gradient(to left, #232526, #414345);
   color:      #fff;
+}
+
+.menu-icon {
+  position: absolute;
+  left:     15px;
+  top:      10px;
+  color:    #fff;
+  z-index:  1;
+  cursor:   pointer;
+}
+
+.menu-icon__icon {
+  font-size: 36px;
 }
 
 @import 'menu/_menu';

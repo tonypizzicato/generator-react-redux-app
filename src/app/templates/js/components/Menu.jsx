@@ -19,45 +19,44 @@ class Menu extends Component {
         onShift:     _.noop
     };
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.open) {
-            document.addEventListener("click", this._onDocumentClick, false);
+    componentDidUpdate() {
+        if (this.props.open) {
+            document.body.addEventListener("mouseup", this._onDocumentClick, false);
         } else {
-            document.removeEventListener("click", this._onDocumentClick, false);
+            document.body.removeEventListener("mouseup", this._onDocumentClick, false);
         }
     }
 
     _onItemClick = (pathname, e) => {
-        e.nativeEvent.stopImmediatePropagation();
         e.stopPropagation();
 
         this.props.onItemClick(pathname);
 
-        if (this.props.open) {
-            this._shift();
-        }
+        this._shift();
     };
 
     _onDocumentClick = (e) => {
-        if (this.props.open && !ReactDom.findDOMNode(this).contains(e.target)) {
+        if (!ReactDom.findDOMNode(this).contains(e.target)) {
             this._shift();
         }
     };
 
     _shift = () => {
-        this.props.onShift();
+        if (this.props.open) {
+            console.log('_shift')
+            this.props.onShift();
+        }
     };
 
     render() {
-        const cls  = cx('page-menu', {
+        const cls = cx('page-menu', {
             'page-menu_active_yes': this.props.open
         });
-        const icon = this.props.open ? 'filter_center_focus' : 'crop_free';
 
         return (
             <nav className={cls}>
                 <span className="page-menu__shift" onTouchTap={this._shift}>
-                    <i className="material-icons">{icon}</i>
+                    <i className="material-icons">close</i>
                 </span>
                 <h2 className="page-menu__label">Sidebar</h2>
                 <ul className="page-menu__list">

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { push } from 'redux-router/lib/actionCreators';
 
 import Menu from './components/Menu.jsx';
+import MenuIcon from './components/MenuIcon.jsx';
 import PageContent from './components/PageContent.jsx';
 
 import actions from './actions';
@@ -28,6 +29,8 @@ class ApplicationContainer extends Component {
                 <Menu open={this.props.menuOpened}
                       onItemClick={this.onMenuItem}
                       onShift={this.onMenuShift}/>
+
+                <MenuIcon onClick={this.onMenuShift}/>
 
                 <PageContent {...this.props}/>
             </div>
