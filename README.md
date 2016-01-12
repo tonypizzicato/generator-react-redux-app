@@ -1,4 +1,4 @@
-# generator-react-redux
+# [WIP] generator-react-redux-app
 
 > Yeoman generator for [React](http://facebook.github.io/react/) with [Redux](http://redux.js.org/)- lets you quickly set up a project including [mocha](https://mochajs.org/) test runner and [Webpack](http://webpack.github.io/) module system and written using ES6. It ships with [redux-devtools](https://github.com/gaearon/redux-devtools) for time travel and [react-transform-hmr](https://github.com/gaearon/react-transform-hmr) for live react components update.
 
@@ -44,7 +44,7 @@ npm serve
 
 ## Generated app
 
-![alt tag](https://raw.githubusercontent.com/tonypizzicato/generator-react-redux/master/react-redux.png)
+![alt tag](https://raw.githubusercontent.com/tonypizzicato/generator-react-redux-app/master/react-redux.png)
 
 ## TODO
 
