@@ -1,11 +1,11 @@
 # [WIP] generator-react-redux-app
 
-> Yeoman generator for [React](http://facebook.github.io/react/) with [Redux](http://redux.js.org/)- lets you quickly set up a project including [mocha](https://mochajs.org/) test runner and [Webpack](http://webpack.github.io/) module system and written using ES6. It ships with [redux-devtools](https://github.com/gaearon/redux-devtools) for time travel and [react-transform-hmr](https://github.com/gaearon/react-transform-hmr) for live react components update.
+> Yeoman generator for [React](http://facebook.github.io/react/) with [Redux](http://redux.js.org/) lets you quickly set up a project including [mocha](https://mochajs.org/) test runner and [Webpack](http://webpack.github.io/) module system and written using ES6. It ships with [redux-devtools](https://github.com/gaearon/redux-devtools) for time travel and [react-transform-hmr](https://github.com/gaearon/react-transform-hmr) for live react components update.
 
 Usage:
 
 ```
-  yo react-redux
+  yo react-redux-app
 ```
 
 ## Commands
@@ -23,7 +23,7 @@ npm serve
 ##### Usage:
 
 ```
-  yo react-redux:router [options] <routeName> <routePath> [<routeLabel>] [<routeIcon>]
+  yo react-redux-app:router [options] <routeName> <routePath> [<routeLabel>] [<routeIcon>]
 ```
 
 ##### Options:
