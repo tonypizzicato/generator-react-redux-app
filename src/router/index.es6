@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import path from 'path';
 import { Base } from 'yeoman-generator';
-import espree from 'espree';
 
 class RouterGenerator extends Base {
     constructor(...args) {
@@ -61,11 +60,6 @@ class RouterGenerator extends Base {
         }
 
         this.fs.writeJSON(jsonPath, json);
-
-
-        /** Code modification */
-        //const code   = this.fs.read(this.destinationPath(`src/js/app-routes.jsx`));
-        //const routes = espree.parse(code, {sourceType: 'module', ecmaFeatures: {jsx: true}});
     }
 }
 

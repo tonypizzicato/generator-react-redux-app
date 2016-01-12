@@ -44,7 +44,7 @@ npm serve
 
 ## Generated app
 
-![alt tag](https://github.com/tonypizzicato/generator-react-redux/blob/master/react-redux.png)
+![alt tag](https://raw.githubusercontent.com/tonypizzicato/generator-react-redux/master/react-redux.png)
 
 ## TODO
 

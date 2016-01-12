@@ -1,8 +1,8 @@
 {
-  "name":            "generator-admin-react-redux",
+  "name":            "generator-react-redux",
   "version":         "0.0.1",
-  "description":     "Admin App Generator",
-  "repository":      "tonypizzicato/generator-admin-react-redux",
+  "description":     "Yeoman generator for React with Redix",
+  "repository":      "tonypizzicato/generator-react-redux",
   "main":            "generators/app/index.js",
   "files":           [
     "generators"
@@ -16,8 +16,6 @@
   "dependencies":    {
     "core-js":          "^2.0.2",
     "es6-promise":      "^3.0.2",
-    "espree":           "^2.2.5",
-    "esprima":          "^2.7.1",
     "isomorphic-fetch": "^2.2.0",
     "lodash":           "^3.10.1",
     "slug":             "^0.9.1",
@@ -34,9 +32,9 @@
     "yeoman-test":          "^1.0.0"
   },
   "keywords":        [
-    "admin",
     "react",
     "redux",
+    "webpack",
     "es6",
     "yeoman",
     "yeoman-generator"
