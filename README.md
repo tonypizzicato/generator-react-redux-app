@@ -1,27 +1,56 @@
 # generator-react-redux
 
+> Yeoman generator for [React](http://facebook.github.io/react/) with [Redux](http://redux.js.org/)- lets you quickly set up a project including [mocha](https://mochajs.org/) test runner and [Webpack](http://webpack.github.io/) module system and written using ES6. It ships with [redux-devtools](https://github.com/gaearon/redux-devtools) for time travel and [react-transform-hmr](https://github.com/gaearon/react-transform-hmr) for live react components update.
+
 Usage:
 
 ```
   yo react-redux
 ```
-  
+
 ## Commands
+
+The following commands are available in your project:
+
+```bash
+## build bundle with webpack and start dev server
+npm serve
+```
+
+## Subgenerators
   
-Usage:
+### Router
+##### Usage:
 
 ```
   yo react-redux:router [options] <routeName> <routePath> [<routeLabel>] [<routeIcon>]
 ```
 
-Options:
-  -h,   --help          # Print the generator's options and usage
-        --skip-cache    # Do not remember prompt answers             Default: false
-        --skip-install  # Do not automatically install dependencies  Default: false
-        --parent        # Description for parent
+##### Options:
 
-Arguments:
+```
+        --parent        # Description for parent
+```
+
+##### Arguments:
+
+
+```
   routeName     Type: String  Required: true
   routePath     Type: String  Required: true
   routeLabel    Type: String  Required: false
   routeIcon     Type: String  Required: false
+```
+
+## Generated app
+
+![alt tag](https://github.com/tonypizzicato/generator-react-redux/blob/master/react-redux.png)
+
+## TODO
+
+- Generate Route config with plain JSX component instead mapping config to routes 
+- Add actions/reducers comopsition with multiple files
+- Investigate router initial state
+- Webpack prod config
+- Tests generation
+- Other usefull sub generators

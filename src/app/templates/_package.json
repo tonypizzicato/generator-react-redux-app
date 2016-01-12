@@ -4,7 +4,8 @@
   "description": "React/Redux platform admin app",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "serve": "gulp serve"
   },
   "license": "ISC",
   "dependencies": <%- JSON.stringify(deps, null, 2).replace(/\n/g, "\n  ") %>,
