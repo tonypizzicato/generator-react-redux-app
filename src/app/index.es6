@@ -48,7 +48,7 @@ function copy(src, dest, tpl = true) {
     }
 }
 
-class AdminAppGenerator extends Base {
+class AppGenerator extends Base {
     constructor(...args) {
         super(...args);
 
@@ -135,6 +135,7 @@ class AdminAppGenerator extends Base {
                     "gulp-replace",
                     "gulp-sequence",
                     "gulp-util",
+                    "json-loader",
                     "less",
                     "less-loader",
                     "react-transform-catch-errors",
@@ -164,6 +165,7 @@ class AdminAppGenerator extends Base {
         this.copy('index.html', 'src/index.html');
 
         this.directory('js', 'src/js');
+        this.directory('config', 'config');
         this.directory('styles', 'src/styles');
     }
 
@@ -174,4 +176,4 @@ class AdminAppGenerator extends Base {
     }
 }
 
-module.exports = AdminAppGenerator;
+module.exports = AppGenerator;

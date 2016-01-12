@@ -19,6 +19,9 @@ module.exports = function (PATH, PORT) {
                 loaders: ['babel-loader'],
                 include: path.join(__dirname, 'src')
             }, {
+                test:    /\.json/,
+                loaders: ['json']
+            }, {
                 test:   /\.less/,
                 loader: 'style!css!autoprefixer!less'
             }, {

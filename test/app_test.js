@@ -1,6 +1,7 @@
-import path from 'path';
+import _ from 'lodash';
 import assert from 'yeoman-assert';
-import helpers from 'yeoman-test';
+import { createAppGenerator, createSubGenerator } from './helper';
+import path from 'path';
 import slug from 'slug';
 
 const appName = 'Test App Name';
@@ -9,16 +10,19 @@ const port    = 3030;
 describe('generator:app', () => {
 
     before(done => {
-        helpers.run(path.join(__dirname, '../src/app'))
-            .withPrompts({
-                appName: appName,
-                install: false,
-                port:    port
-            })
-            .on('end', done);
+        createAppGenerator({
+            appName: appName,
+            install: false,
+            port:    port
+        }).on('end', done);
     });
 
-    it('should generate utility files', () => {
+    it('every generator can be required without throwing', function () {
+        this.app    = require('../generators/app');
+        this.router = require('../generators/router');
+    });
+
+    it('should generate expected files', () => {
         assert.file([
             ".babelrc",
             ".gitignore",
@@ -28,6 +32,7 @@ describe('generator:app', () => {
             "package.json",
             "README.md",
             "webpack.development.js",
+            "config/routes.json",
             "src"
         ]);
     });
@@ -36,6 +41,7 @@ describe('generator:app', () => {
         assert.fileContent('package.json', `"name": "${slug(appName).toLowerCase()}"`);
         assert.fileContent('README.md', appName);
         assert.fileContent('gulpfile.babel.js', `const PORT = process.env.PORT || ${port};`);
-        assert.fileContent('src/js/components/pages/Main.jsx', `Hello from ${appName}`);
+        assert.fileContent('src/js/components/pages/Index.jsx', `Hello from ${appName}`);
+        assert.fileContent('config/routes.json', 'index');
     });
-})
+});

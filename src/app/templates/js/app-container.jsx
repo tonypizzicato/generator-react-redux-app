@@ -1,4 +1,6 @@
+import _ from 'lodash';
 import cx from 'classnames';
+import path from 'path';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'redux-router/lib/actionCreators';
@@ -8,6 +10,38 @@ import MenuIcon from './components/MenuIcon.jsx';
 import PageContent from './components/PageContent.jsx';
 
 import actions from './actions';
+import routes from '../../config/routes.json';
+
+/**
+ * Map routes config file to menu items
+ *
+ * @param {String} name
+ * @returns {*}
+ */
+const mapRoutes = function (name) {
+    const route = this[name];
+
+    const item = {...route, name}
+
+    if (_.isPlainObject(route.routes)) {
+        item.items = Object.keys(route.routes)
+            .map(subrouteName => {
+                route.routes[subrouteName].path = path.join(route.path, route.routes[subrouteName].path);
+
+                return subrouteName;
+            })
+            .map(mapRoutes, route.routes);
+    }
+
+    return item;
+};
+
+/**
+ * Map routes config to menu items
+ *
+ * @type {Array}
+ */
+const menuItems = Object.keys(routes).map(mapRoutes, routes);
 
 class ApplicationContainer extends Component {
 
@@ -26,7 +60,8 @@ class ApplicationContainer extends Component {
 
         return (
             <div className={cls}>
-                <Menu open={this.props.menuOpened}
+                <Menu items={menuItems}
+                      open={this.props.menuOpened}
                       onItemClick={this.onMenuItem}
                       onShift={this.onMenuShift}/>
 

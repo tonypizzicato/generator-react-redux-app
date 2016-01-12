@@ -8,6 +8,7 @@ import ReactDom from 'react-dom';
  */
 class Menu extends Component {
     static propTypes = {
+        items:       PropTypes.array.isRequired,
         open:        PropTypes.bool,
         onItemClick: PropTypes.func,
         onShift:     PropTypes.func
@@ -28,7 +29,7 @@ class Menu extends Component {
     }
 
     _onItemClick = (pathname, e) => {
-        e.stopPropagation();
+        e.preventDefault();
 
         this.props.onItemClick(pathname);
 
@@ -43,7 +44,6 @@ class Menu extends Component {
 
     _shift = () => {
         if (this.props.open) {
-            console.log('_shift')
             this.props.onShift();
         }
     };
@@ -59,21 +59,28 @@ class Menu extends Component {
                     <i className="material-icons">close</i>
                 </span>
                 <h2 className="page-menu__label">Sidebar</h2>
-                <ul className="page-menu__list">
-                    <li className="page-menu__item">
-                        <a className="page-menu__link" onTouchTap={this._onItemClick.bind(this, '/home')}>
-                            <i className="page-menu__icon material-icons">home</i>Home
-                        </a>
-                    </li>
-                    <li className="page-menu__item">
-                        <a className="page-menu__link" onTouchTap={this._onItemClick.bind(this, '/dash')}>
-                            <i className="page-menu__icon material-icons">data_usage</i>Data Management
-                        </a>
-                    </li>
-                </ul>
+                {this.renderItems(this.props.items)}
             </nav>
         )
     }
+
+    renderItems = (items) => {
+        return (
+            <ul className="page-menu__list">
+                {items.map(item => {
+                    return (
+                        <li className="page-menu__item" key={item.name}>
+                            <a href={item.path} className="page-menu__link" onClick={this._onItemClick.bind(this, item.path)}>
+                                <i className="page-menu__icon material-icons">{item.icon}</i>{item.label}
+                            </a>
+                            {item.items ? this.renderItems(item.items) : null}
+                        </li>
+                    )
+                })}
+            </ul>
+        )
+
+    };
 }
 
 export default Menu;
