@@ -54,8 +54,6 @@ class AppGenerator extends Base {
 
         this.copy               = copy.bind(this);
         this.getPackageVersions = getPackageVersions.bind(this);
-
-        this.config.save();
     }
 
     prompting() {
@@ -67,16 +65,28 @@ class AppGenerator extends Base {
                 name:    'appName',
                 message: 'What\'s the name of your application?',
             }, {
-                type:      'input',
-                name:      'port',
-                message:   'Dev server port',
-                'default': 3000
+                type:    'input',
+                name:    'port',
+                message: 'Dev server port',
+                default: 3000
             }, {
-                type:      'list',
-                name:      'install',
-                message:   'Install dependencies?',
-                choices:   [{name: 'Yes', value: true}, {name: 'No', value: false}],
-                'default': true
+                type:    'list',
+                name:    'installServer',
+                message: 'Generate backend sample server for api?',
+                choices: [{name: 'Yes', value: true}, {name: 'No', value: false}],
+                default: true
+            }, {
+                type:    'input',
+                name:    'apiServerPort',
+                message: 'Backend server port',
+                when:    answers => answers['installServer'],
+                default: 3008
+            }, {
+                type:    'list',
+                name:    'install',
+                message: 'Install dependencies?',
+                choices: [{name: 'Yes', value: true}, {name: 'No', value: false}],
+                default: true
             }
         ];
 
@@ -85,6 +95,8 @@ class AppGenerator extends Base {
                 ...props,
                 appNameSlug: slug(props.appName).toLowerCase()
             };
+
+            this.config.set(this.props);
 
             done();
         });
@@ -114,7 +126,7 @@ class AppGenerator extends Base {
                     "redux-router",
                     "redux-thunk",
                     "whatwg-fetch"
-                ]);
+                ].concat(this.props.installServer ? ['express'] : []));
             },
 
             devDeps() {
@@ -149,7 +161,7 @@ class AppGenerator extends Base {
                     "url-loader",
                     "webpack",
                     "webpack-dev-server"
-                ]);
+                ].concat(this.props.installServer ? ['babel-cli'] : []));
             }
         }
     }
@@ -167,6 +179,10 @@ class AppGenerator extends Base {
         this.directory('js', 'src/js');
         this.directory('config', 'config');
         this.directory('styles', 'src/styles');
+
+        if (this.props.installServer) {
+            this.directory('server', 'server');
+        }
     }
 
     install() {

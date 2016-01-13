@@ -63,6 +63,7 @@ gulp.task('webpack', function () {
     new WebpackDevServer(webpack(config), {
         contentBase:  path.join(__dirname, PATH),
         publicPath:   `http://localhost:${PORT}/`,
+        historyApiFallback: true,
         hot:          true,
         watchOptions: {
             aggregateTimeout: 100

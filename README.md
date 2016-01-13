@@ -2,7 +2,14 @@
 
 > Yeoman generator for [React](http://facebook.github.io/react/) with [Redux](http://redux.js.org/) lets you quickly set up a project including [mocha](https://mochajs.org/) test runner and [Webpack](http://webpack.github.io/) module system and written using ES6. It ships with [redux-devtools](https://github.com/gaearon/redux-devtools) for time travel and [react-transform-hmr](https://github.com/gaearon/react-transform-hmr) for live react components update.
 
-Usage:
+## Installation
+
+```bash
+npm install -g yo
+npm install -g generator-react-redux-app
+```
+
+## Usage:
 
 ```
   yo react-redux-app
@@ -29,7 +36,7 @@ npm serve
 ##### Options:
 
 ```
-        --parent        # Description for parent
+  --parent  # Parent rote name (for subroutes)
 ```
 
 ##### Arguments:
@@ -49,8 +56,7 @@ npm serve
 ## TODO
 
 - Generate Route config with plain JSX component instead mapping config to routes 
-- Add actions/reducers comopsition with multiple files
+- Add actions/reducers composition with multiple files
 - Investigate router initial state
 - Webpack prod config
 - Tests generation
-- Other usefull sub generators

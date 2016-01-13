@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class <%= pageClassName %> extends Component {
     render() {
@@ -10,4 +11,8 @@ class <%= pageClassName %> extends Component {
     }
 }
 
-export default <%= pageClassName %>;
+function mapState(state) {
+    return state.toJS();
+}
+
+export default connect(mapState)(<%= pageClassName %>);

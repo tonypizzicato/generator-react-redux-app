@@ -1,0 +1,15 @@
+{
+  "router": {
+    "routes":     [],
+    "params":     {},
+    "location":   {
+      "query": {
+        "q": ""
+      }
+    },
+    "components": []
+  },
+  "ui":     {
+    "menuOpened": false
+  }
+}

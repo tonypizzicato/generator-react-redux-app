@@ -4,16 +4,19 @@ import { createAppGenerator, createSubGenerator } from './helper';
 import path from 'path';
 import slug from 'slug';
 
-const appName = 'Test App Name';
-const port    = 3030;
+const appName    = 'Test App Name';
+const port       = 3030;
+const serverPort = 3010;
 
 describe('generator:app', () => {
 
     before(done => {
         createAppGenerator({
-            appName: appName,
-            install: false,
-            port:    port
+            appName:       appName,
+            install:       false,
+            port:          port,
+            installServer: true,
+            apiServerPort: serverPort
         }).on('end', done);
     });
 
@@ -43,5 +46,24 @@ describe('generator:app', () => {
         assert.fileContent('gulpfile.babel.js', `const PORT = process.env.PORT || ${port};`);
         assert.fileContent('src/js/components/pages/Index.jsx', `Hello from ${appName}`);
         assert.fileContent('config/routes.json', 'index');
+
+        assert.fileContent('server/server.js', `${serverPort}`);
+        assert.fileContent('package.json', 'express');
+        assert.fileContent('package.json', 'babel-cli');
+    });
+
+    it('should not install express and copy server.js on server declined', done => {
+        createAppGenerator({
+            appName:       appName,
+            install:       false,
+            port:          port,
+            installServer: false
+        }).on('end', () => {
+            assert.noFileContent('package.json', 'express');
+            assert.noFileContent('package.json', 'babel-cli');
+            assert.noFile('server/server.js');
+
+            done();
+        });
     });
 });

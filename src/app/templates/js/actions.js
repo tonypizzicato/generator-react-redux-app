@@ -1,19 +1,9 @@
 import { createAction } from 'redux-actions';
 
-/** App initialized action */
-export const INITIALIZE = 'INITIALIZE';
-
-/** Toggle menu state */
-export const TOGGLE_MENU = 'TOGGLE_MENU';
+import ui from './actions/ui';
+/** inject:action-import */
 
 /**
- *
- * TODO: compose actions with multiple files
- * @author tony.pizzicato
- * @date 06.01.16
- * @time 17:54
- *
- *
  * Application actions, that can mutate app state.
  * Action is just a plain object with type and [optional] payload.
  *
@@ -32,8 +22,8 @@ export const TOGGLE_MENU = 'TOGGLE_MENU';
  * More about actions: {@link http://rackt.org/redux/docs/basics/Actions.html Actions}
  */
 const actions = {
-    initialize: createAction(INITIALIZE),
-    toggleMenu: createAction(TOGGLE_MENU)
+    ui: ui,
+    /** inject:action */
 };
 
 export default actions;

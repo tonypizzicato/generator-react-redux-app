@@ -6,7 +6,7 @@ import path from 'path';
 const appName = 'Test App Name';
 const port    = 3030;
 
-describe('generator:routes', function () {
+describe('generator:router', function () {
 
     const prompts = {
         appName: appName,

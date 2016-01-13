@@ -9,6 +9,7 @@ import createHistory from 'history/lib/createBrowserHistory';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import loggerMiddleware from './utils/createLogger';
+import fetchMiddleware from './middlewares/fetchMiddleware';
 
 /** Main application reducer. Check out {@link http://rackt.org/redux/docs/basics/Reducers.html Reducers} */
 import reducer, { INITIAL_STATE } from './reducer';
@@ -31,7 +32,7 @@ injectTapEventPlugin();
 
 /** Creating store factory with middlewares */
 const storeFactoryWithMiddlewares = compose(
-    applyMiddleware(thunkMiddleware, loggerMiddleware),
+    applyMiddleware(thunkMiddleware, fetchMiddleware, loggerMiddleware),
     reduxReactRouter({
         routes,
         createHistory,

@@ -10,6 +10,7 @@ import MenuIcon from './components/MenuIcon.jsx';
 import PageContent from './components/PageContent.jsx';
 
 import actions from './actions';
+
 import routes from '../../config/routes.json';
 
 /**
@@ -44,13 +45,12 @@ const mapRoutes = function (name) {
 const menuItems = Object.keys(routes).map(mapRoutes, routes);
 
 class ApplicationContainer extends Component {
-
     onMenuItem = (pathname) => {
         this.props.dispatch(push(pathname));
     };
 
     onMenuShift = () => {
-        this.props.dispatch(actions.toggleMenu());
+        this.props.dispatch(actions.ui.toggleMenu());
     };
 
     render() {
@@ -75,7 +75,7 @@ class ApplicationContainer extends Component {
 
 function mapState(state) {
     return {
-        menuOpened: state.get('menuOpened')
+        menuOpened: state.get('ui').get('menuOpened')
     }
 }
 
