@@ -2,16 +2,28 @@ import _ from 'lodash';
 import path from 'path';
 import { Base } from 'yeoman-generator';
 
+const routeIcon = 'help_outline';
+
 class RouterGenerator extends Base {
     constructor(...args) {
         super(...args);
 
-        this.argument('routeName', {type: String, required: true});
-        this.argument('routePath', {type: String, required: true});
-        this.argument('routeLabel', {type: String, default: 'label'});
-        this.argument('routeIcon', {type: String, default: 'help_outline'});
+        this.argument('routeName', {
+            type:     String,
+            required: true,
+            desc:     'The name of generated route. Used for menu label and route path'
+        });
 
-        this.option('parent', {type: String, default: null});
+        this.option('parent', {
+            alias:   'p',
+            type:    String,
+            default: null,
+            desc:    'The name of parent route, that generated one will be nested in'
+        });
+
+
+        this.routePath  = _.kebabCase(this.routeName);
+        this.routeLabel = _.capitalize(this.routeName);
 
         this.pageClassName = _.capitalize(_.camelCase(this.routeName));
         this.pagePathName  = this.pageClassName;
@@ -35,7 +47,7 @@ class RouterGenerator extends Base {
                 [this.routeName]: {
                     "path":  this.routePath,
                     "label": this.routeLabel,
-                    "icon":  this.routeIcon
+                    "icon":  routeIcon
                 }
             });
 
@@ -48,7 +60,7 @@ class RouterGenerator extends Base {
                 [this.routeName]: {
                     "path":  this.routePath,
                     "label": this.routeLabel,
-                    "icon":  this.routeIcon
+                    "icon":  routeIcon
                 }
             });
 

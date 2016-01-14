@@ -15,7 +15,6 @@ describe('generator:router', function () {
     };
 
     const routeName = 'name';
-    const routePath = 'path';
 
     beforeEach(function (done) {
         createAppGenerator(prompts)
@@ -33,30 +32,12 @@ describe('generator:router', function () {
         const capitalized = _.capitalize(_.camelCase(routeName));
 
         this.generator
-            .withArguments([routeName, routePath])
+            .withArguments([routeName])
             .on('end', function () {
                 assert.fileContent('config/routes.json', routeName);
-                assert.fileContent('config/routes.json', routePath);
-                assert.fileContent('config/routes.json', 'label');
                 assert.fileContent('config/routes.json', 'help_outline');
 
                 assert.file(`src/js/components/pages/${capitalized}.jsx`);
-
-                done();
-            });
-    });
-
-    it('should add new route with provided label and icon', function (done) {
-        const label = 'Page Label';
-        const icon  = 'ico';
-
-        this.generator
-            .withArguments([routeName, routePath, label, icon])
-            .on('end', function () {
-                assert.fileContent('config/routes.json', routeName);
-                assert.fileContent('config/routes.json', routePath);
-                assert.fileContent('config/routes.json', label);
-                assert.fileContent('config/routes.json', icon);
 
                 done();
             });

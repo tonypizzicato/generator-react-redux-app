@@ -7,8 +7,20 @@ class EntityGenerator extends Base {
 
         const port = this.config.get('apiServerPort');
 
-        this.argument('name', {type: String, required: true});
-        this.argument('remotePath', {type: String, default: `http://localhost:${port}/api/${this.name}`});
+        this.argument('name', {
+            type:     String,
+            required: true,
+            desc:     'Name of generated entity'
+        });
+        this.argument('remotePath', {
+            type:    String,
+            default: `http://localhost:${port}/api/${this.name}`,
+            desc:    'Remote api path to fetch entities from'
+        });
+        this.option('with-no-api', {
+            alias:    'n',
+            desc:     'Disable generation of backend api handler for fetch requests'
+        })
 
         this.entityName      = this.name;
         this.entityNameSnake = _.snakeCase(this.name).toUpperCase();
@@ -65,7 +77,7 @@ class EntityGenerator extends Base {
 
         this.fs.writeJSON(jsonPath, json);
 
-        if (this.config.get('installServer')) {
+        if (this.config.get('installServer') && !this.options['with-no-api']) {
             server = this.fs.read(this.destinationPath('server/server.js'));
             server = server.replace('/** inject:route */',
                 `apiRouter.get('/${this.name}', (req, res) => res.json([]));\n/** inject:route */`);
