@@ -1,6 +1,6 @@
 {
   "name": "generator-react-redux-app",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Yeoman generator for React with Redux",
   "repository": "https://github.com/tonypizzicato/generator-react-redux-app",
   "main": "generators/app/index.js",
