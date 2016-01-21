@@ -1,7 +1,6 @@
+import _ from 'lodash';
 import { Base } from 'yeoman-generator';
-import slug from 'slug';
 
-require('core-js');
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
@@ -93,7 +92,7 @@ class AppGenerator extends Base {
         this.prompt(prompt, (props = {}) => {
             this.props = {
                 ...props,
-                appNameSlug: slug(props.appName).toLowerCase()
+                appNameSlug: _.kebabCase(props.appName).toLowerCase()
             };
 
             this.config.set(this.props);
@@ -123,7 +122,7 @@ class AppGenerator extends Base {
                     "redux-actions",
                     "redux-devtools",
                     "redux-logger",
-                    "redux-router",
+                    "redux-simple-router",
                     "redux-thunk",
                     "whatwg-fetch"
                 ].concat(this.props.installServer ? ['express'] : []));
@@ -156,7 +155,7 @@ class AppGenerator extends Base {
                     "redux-devtools",
                     "redux-devtools-dock-monitor",
                     "redux-devtools-log-monitor",
-                    "style-loader",
+                    "s  tyle-loader",
                     "svgo-loader",
                     "url-loader",
                     "webpack",

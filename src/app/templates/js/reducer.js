@@ -1,7 +1,6 @@
-import { fromJS } from 'immutable';
 import { handleActions } from 'redux-actions';
 
-import routerStateReducer from 'redux-router/lib/routerStateReducer';
+import { routeReducer } from 'redux-simple-router';
 
 import INITIAL_STATE from '../../config/state.json';
 
@@ -21,7 +20,7 @@ import uiReducer from './reducers/ui';
  */
 const reducer = function (state = fromJS(INITIAL_STATE), action) {
     return state.merge({
-        router: routerStateReducer(state.get('router'), action),
+        routing: routeReducer(state.get('routing').toJS(), action),
 
         ui: uiReducer(state.get('ui'), action),
         /** inject:reducer */

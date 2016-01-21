@@ -7,7 +7,7 @@ module.exports = function (PATH, PORT) {
             // Set developer server to server static
             `webpack-dev-server/client?http://localhost:` + PORT,
             'webpack/hot/only-dev-server',
-            // Set up an ES6-ish environment with core-js
+            // Set up an ES6-ish environment
             'babel-polyfill',
             // Add our application's script below
             './src/styles/main.less',

@@ -3,7 +3,7 @@ import cx from 'classnames';
 import path from 'path';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { push } from 'redux-router/lib/actionCreators';
+import { routeActions } from 'redux-simple-router'
 
 import Menu from './components/Menu.jsx';
 import MenuIcon from './components/MenuIcon.jsx';
@@ -46,7 +46,7 @@ const menuItems = Object.keys(routes).map(mapRoutes, routes);
 
 class ApplicationContainer extends Component {
     onMenuItem = (pathname) => {
-        this.props.dispatch(push(pathname));
+        this.props.dispatch(routeActions.push(pathname));
     };
 
     onMenuShift = () => {

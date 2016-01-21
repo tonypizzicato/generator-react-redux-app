@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import path from 'path';
-import { Base } from 'yeoman-generator';
+import {Base} from 'yeoman-generator';
 
 const routeIcon = 'help_outline';
 
@@ -21,12 +21,20 @@ class RouterGenerator extends Base {
             desc:    'The name of parent route, that generated one will be nested in'
         });
 
+        this.option('with-no-entity', {
+            alias:   'e',
+            type:    Boolean,
+            default: false,
+            desc:    'Disable generation of entity and api handlers'
+        });
+
 
         this.routePath  = _.kebabCase(this.routeName);
         this.routeLabel = _.capitalize(this.routeName);
 
         this.pageClassName = _.capitalize(_.camelCase(this.routeName));
         this.pagePathName  = this.pageClassName;
+        this.entityName    = _.camelCase(this.routeName);
     }
 
     writing() {
@@ -35,6 +43,7 @@ class RouterGenerator extends Base {
 
         let json = this.fs.readJSON(jsonPath) || {};
 
+        let pageClassPath;
         const parentRoute = this.options.parent;
 
         if (parentRoute && !json[parentRoute]) {
@@ -51,9 +60,7 @@ class RouterGenerator extends Base {
                 }
             });
 
-            /** Generating Page component */
-            this.fs.copyTpl(this.templatePath('Page.jsx'),
-                this.destinationPath(`src/js/components/pages/${this.pageClassName}.jsx`), this);
+            pageClassPath = this.pageClassName;
         } else {
             /** Add sub-route for specified parent */
             json[parentRoute]['routes'] = _.extend(json[parentRoute]['routes'] || {}, {
@@ -64,14 +71,24 @@ class RouterGenerator extends Base {
                 }
             });
 
-
             this.pagePathName = path.join(_.capitalize(_.camelCase(parentRoute)), this.pageClassName);
-            /** Generating Page component */
-            this.fs.copyTpl(this.templatePath('Page.jsx'),
-                this.destinationPath(`src/js/components/pages/${this.pagePathName}.jsx`), this);
+            pageClassPath     = this.pagePathName;
         }
 
         this.fs.writeJSON(jsonPath, json);
+
+        if (!this.options['with-no-entity']) {
+
+            /** Generating Page component */
+            this.fs.copyTpl(this.templatePath('PageDispatched.jsx'),
+                this.destinationPath(`src/js/components/pages/${pageClassPath}.jsx`), this);
+
+            this.composeWith('react-redux-app:entity', {args: [this.routeLabel]});
+        } else {
+            /** Generating Page component */
+            this.fs.copyTpl(this.templatePath('Page.jsx'),
+                this.destinationPath(`src/js/components/pages/${pageClassPath}.jsx`), this);
+        }
     }
 }
 

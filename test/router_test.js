@@ -1,6 +1,7 @@
 import _ from 'lodash';
+import helpers from 'yeoman-test';
 import assert from 'yeoman-assert';
-import { createAppGenerator, createSubGenerator } from './helper';
+import {createAppGenerator, createSubGenerator} from './helper';
 import path from 'path';
 
 const appName = 'Test App Name';
@@ -16,10 +17,15 @@ describe('generator:router', function () {
 
     const routeName = 'name';
 
+    var deps = [
+        [helpers.createDummyGenerator(), 'react-redux-app:entity']
+    ];
+
+
     beforeEach(function (done) {
         createAppGenerator(prompts)
             .on('end', () => {
-                this.generator = createSubGenerator('router', []);
+                this.generator = createSubGenerator('router', []).withGenerators(deps);
 
                 // Hack to not clear the directory
                 this.generator.inDirSet = true;
@@ -38,6 +44,7 @@ describe('generator:router', function () {
                 assert.fileContent('config/routes.json', 'help_outline');
 
                 assert.file(`src/js/components/pages/${capitalized}.jsx`);
+                assert.fileContent(`src/js/components/pages/${capitalized}.jsx`, 'componentDidMount');
 
                 done();
             });

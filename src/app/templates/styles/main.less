@@ -103,4 +103,43 @@ body {
   font-size: 36px;
 }
 
+th:last-child {
+  min-width: 400px;
+}
+
+tr th:first-child,
+tr td:first-child {
+  width: 60px;
+}
+
+tr th:last-child,
+tr td:last-child {
+  position:      relative;
+  padding-right: 40px;
+}
+
+th i.material-icons,
+td i.material-icons {
+  display:     none;
+  position:    absolute;
+  right:       5px;
+  bottom:      0;
+  height:      30px;
+  line-height: 30px;
+  font-size:   18px;
+  opacity:     0;
+  cursor:      pointer;
+  user-select: none;
+
+  transition:  opacity .2s;
+}
+
+th:hover i,
+td:hover i {
+  display: block;
+  opacity: 1;
+}
+
 @import 'menu/_menu';
+@import 'table/_table';
+

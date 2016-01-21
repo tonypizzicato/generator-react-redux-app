@@ -44,7 +44,7 @@ describe('generator:entity', function () {
                 assert.fileContent(`src/js/reducer.js`,
                     `import ${camelCased}Reducer from './reducers/${camelCased}';\n/** inject:reducer-import */`);
                 assert.fileContent(`src/js/reducer.js`,
-                    `${camelCased}: ${camelCased}Reducer(state.get('${camelCased}'), action),\n/** inject:reducer */`);
+                    `${camelCased}: ${camelCased}Reducer(state.get('${camelCased}'), action)\n\t\t/** inject:reducer */`);
 
                 assert.fileContent(`src/js/reducers/${camelCased}.js`, `${snakeCased}_FETCH`);
                 assert.fileContent(`src/js/reducers/${camelCased}.js`, 'isFetching');
@@ -60,7 +60,9 @@ describe('generator:entity', function () {
     it('should add new route to server.js', function (done) {
         this.generator
             .on('end', function () {
-                assert.fileContent('server/server.js', `apiRouter.get('/${name}', (req, res) => res.json([]));\n/** inject:route */`);
+                assert.fileContent('server/server.js', `apiRouter.get('/${name}`);
+                assert.fileContent('server/server.js', `apiRouter.put('/${name}`);
+                assert.fileContent('server/server.js', `apiRouter.delete('/${name}`);
 
                 done();
             });

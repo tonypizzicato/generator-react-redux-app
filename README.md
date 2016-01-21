@@ -1,4 +1,4 @@
-# [WIP] generator-react-redux-app
+# generator-react-redux-app
 
 > Yeoman generator for [React](http://facebook.github.io/react/) with [Redux](http://redux.js.org/) lets you quickly set up a project including [mocha](https://mochajs.org/) test runner and [Webpack](http://webpack.github.io/) module system and written using ES6. It ships with [redux-devtools](https://github.com/gaearon/redux-devtools) for time travel and [react-transform-hmr](https://github.com/gaearon/react-transform-hmr) for live react components update.
 Development workflow is similar to one described in [this great article](http://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html).
@@ -23,44 +23,12 @@ Generate app structure:
   # Run app generator
   yo react-redux-app #generates app structure
 ```
-Generate app entities:
+Generate app routes:
 ```bash
   # generate client users page (components/pages/Users.jsx) with new menu item
   yo react-redux-app:router users
-  
-  # generate entity users with fetch action and reducer for handling it
-  yo react-redux-app:entity users
 ```
-
-To use fetch action ```componentDidMount``` in ```components/pages/Users.jsx``` can be used
-```js
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
-import actions from '../../actions';
-
-class Users extends Component {
-    componentDidMount() {
-      this.props.dispatch(actions.users.fetch())
-    }
-
-    render() {
-        return (
-            <div>
-                {this.props.children || <h1>Hello from Users page</h1>}
-            </div>
-        )
-    }
-}
-
-function mapState(state) {
-    return {
-        users: state.get('users').toJS()
-    }
-}
-
-export default connect(mapState)(Users);
-```
+It will generate new page with menu item, actions to fetch/remove/add entities, reducer for handling this actions and express server routes with sample data.
 
 ## Commands
 
@@ -80,7 +48,6 @@ npm run server
 This command generates client side route with menu item and sample page. Routes config saved in ```config/routes.json```.
 Menu item icon is also configured here and uses [Google Material Icons](https://design.google.com/icons/).
 
-```npm run serve``` restart required.
 ##### Usage:
 ```bash
   yo react-redux-app:router <routeName> [options] 
@@ -92,7 +59,12 @@ Menu item icon is also configured here and uses [Google Material Icons](https://
 ##### Options:
 ```bash
   -p, --parent  # The name of parent route, that generated one will be nested in
+  -e, --with-no-entity  # Disable generation of entity and api handlers
 ```
+If ```--with-no-entity``` option is not present, this command will generate server api handlers for ```<routeName>``` entity and actions/reducer for handling fetch/add/remove actions on client.
+```npm run server``` restart required.
+
+If ```--with-no-entity``` is set, then only new page component and menu item would be generated with new route.
 
 ### Entity
 This command generates fetch action and reducer for <name> entity. If -with-no-api options is not proveded, it also generates simple handler on backend server for fetch calls. ```npm run serve``` restart required.

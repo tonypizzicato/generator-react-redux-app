@@ -1,9 +1,10 @@
+import { fromJS } from 'immutable';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { ReduxRouter, reduxReactRouter } from 'redux-router';
 
-import createHistory from 'history/lib/createBrowserHistory';
+import { Router, browserHistory } from 'react-router';
+import { syncHistory, routeReducer } from 'redux-simple-router'
 
 /** Redux utils and middlewares. Check out {@link http://rackt.org/redux/docs/advanced/Middleware.html Middleware} */
 import { createStore, applyMiddleware, compose } from 'redux';
@@ -12,7 +13,8 @@ import loggerMiddleware from './utils/createLogger';
 import fetchMiddleware from './middlewares/fetchMiddleware';
 
 /** Main application reducer. Check out {@link http://rackt.org/redux/docs/basics/Reducers.html Reducers} */
-import reducer, { INITIAL_STATE } from './reducer';
+import reducer from './reducer';
+import INITIAL_STATE from '../../config/state.json';
 
 /** onTouchTap workaround. See {@link https://github.com/zilverline/react-tap-event-plugin} */
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -29,20 +31,19 @@ window.Perf = Perf;
 
 injectTapEventPlugin();
 
+const reduxRouterMiddleware = syncHistory(browserHistory)
 
 /** Creating store factory with middlewares */
 const storeFactoryWithMiddlewares = compose(
-    applyMiddleware(thunkMiddleware, fetchMiddleware, loggerMiddleware),
-    reduxReactRouter({
-        routes,
-        createHistory,
-        routerStateSelector: state => state.get('router').toJS()
-    }),
+    applyMiddleware(thunkMiddleware, fetchMiddleware, reduxRouterMiddleware, loggerMiddleware),
     DevTools.instrument()
 )(createStore);
 
 /** Instantiating store with all applied middlewares */
-const store = storeFactoryWithMiddlewares(reducer, INITIAL_STATE);
+const store = storeFactoryWithMiddlewares(reducer, fromJS(INITIAL_STATE));
+
+// Required for replaying actions from devtools to work
+reduxRouterMiddleware.listenForReplays(store, state => state.get('routing').toJS())
 
 /**
  * Rendering our root React component to html element
@@ -54,7 +55,9 @@ const store = storeFactoryWithMiddlewares(reducer, INITIAL_STATE);
 render(
     <Provider store={store}>
         <div className="app__container">
-            <ReduxRouter routes={routes} onUpdate={() => window.scrollTo(0, 0)}/>
+            <Router history={browserHistory}>
+                {routes}
+            </Router>
             <DevTools/>
         </div>
     </Provider>,

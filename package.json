@@ -14,11 +14,9 @@
     "test": "./node_modules/.bin/_mocha"
   },
   "dependencies": {
-    "core-js": "^2.0.2",
     "es6-promise": "^3.0.2",
     "isomorphic-fetch": "^2.2.0",
     "lodash": "^3.10.1",
-    "slug": "^0.9.1",
     "yeoman-generator": "^0.22.2"
   },
   "devDependencies": {

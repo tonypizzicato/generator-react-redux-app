@@ -1,6 +1,13 @@
 import _ from 'lodash';
 import { Base } from 'yeoman-generator';
 
+function randomString(length) {
+    const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var result  = '';
+    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+}
+
 class EntityGenerator extends Base {
     constructor(...args) {
         super(...args);
@@ -14,16 +21,17 @@ class EntityGenerator extends Base {
         });
         this.argument('remotePath', {
             type:    String,
-            default: `http://localhost:${port}/api/${this.name}`,
+            default: `http://localhost:${port}/api/${_.kebabCase(this.name)}`,
             desc:    'Remote api path to fetch entities from'
         });
         this.option('with-no-api', {
-            alias:    'n',
-            desc:     'Disable generation of backend api handler for fetch requests'
+            alias: 'n',
+            desc:  'Disable generation of backend api handler for fetch requests'
         })
 
         this.entityName      = this.name;
         this.entityNameSnake = _.snakeCase(this.name).toUpperCase();
+        this.entityNameKebab = _.kebabCase(this.name);
         this.entityNameCamel = _.camelCase(this.name);
     }
 
@@ -59,13 +67,13 @@ class EntityGenerator extends Base {
         reducer = reducer.replace('/** inject:reducer-import */',
             `import ${this.entityNameCamel}Reducer from './reducers/${this.entityNameCamel}';\n/** inject:reducer-import */`);
         reducer = reducer.replace('/** inject:reducer */',
-            `${this.entityNameCamel}: ${this.entityNameCamel}Reducer(state.get('${this.entityNameCamel}'), action),\n/** inject:reducer */`);
+            `${this.entityNameCamel}: ${this.entityNameCamel}Reducer(state.get('${this.entityNameCamel}'), action)\n\t\t/** inject:reducer */`);
 
         this.fs.write(this.destinationPath('src/js/reducer.js'), reducer);
 
 
         /** Updating initial state */
-        const jsonPath = this.destinationPath('config/state.json');
+        let jsonPath = this.destinationPath('config/state.json');
 
         let json = this.fs.readJSON(jsonPath) || {};
 
@@ -78,11 +86,40 @@ class EntityGenerator extends Base {
         this.fs.writeJSON(jsonPath, json);
 
         if (this.config.get('installServer') && !this.options['with-no-api']) {
+            const entities = _.range(0, 5).map(i => ({id: i, value: randomString(32)}));
+            const varName  = _.capitalize(this.entityNameCamel);
+
             server = this.fs.read(this.destinationPath('server/server.js'));
             server = server.replace('/** inject:route */',
-                `apiRouter.get('/${this.name}', (req, res) => res.json([]));\n/** inject:route */`);
+                `/** ${this.name} */
+let entities${varName} = require('./entity/${this.entityNameKebab}.json');
+apiRouter.get('/${this.entityNameKebab}', (req, res) => res.json(entities${varName}));
+apiRouter.put('/${this.entityNameKebab}', (req, res) => {
+    const lastId = entities${varName}.length ? entities${varName}[entities${varName}.length - 1]["id"] : -1;
+    entities${varName}.push({id: lastId + 1, value: randomString(32)});
+    res.json(entities${varName});
+});
+apiRouter.delete('/${this.entityNameKebab}/:id', (req, res) => {
+    entities${varName} = entities${varName}.filter(item => item.id != req.params["id"]);
+    res.json(entities${varName});
+});
+
+/** inject:route */`);
 
             this.fs.write(this.destinationPath('server/server.js'), server);
+
+            jsonPath = this.destinationPath(`server/entity/${this.entityNameKebab}.json`);
+
+            /** Generating sample data for entity */
+            this.fs.writeJSON(jsonPath, entities);
+        }
+    }
+
+    end() {
+        if (this.config.get('installServer') && !this.options['with-no-api']) {
+            this.log();
+            this.log('[WARN] Don\'t forget to reboot express server with "npm run server"');
+            this.log();
         }
     }
 }

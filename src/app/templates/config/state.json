@@ -1,13 +1,6 @@
 {
-  "router": {
-    "routes":     [],
-    "params":     {},
-    "location":   {
-      "query": {
-        "q": ""
-      }
-    },
-    "components": []
+  "routing": {
+    "location": ""
   },
   "ui":     {
     "menuOpened": false
