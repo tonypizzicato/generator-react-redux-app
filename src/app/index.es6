@@ -155,7 +155,7 @@ class AppGenerator extends Base {
                     "redux-devtools",
                     "redux-devtools-dock-monitor",
                     "redux-devtools-log-monitor",
-                    "s  tyle-loader",
+                    "style-loader",
                     "svgo-loader",
                     "url-loader",
                     "webpack",
